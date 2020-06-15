@@ -31,7 +31,7 @@ Topic
 
 ## User Story ( At least 4)
 1. Create - User can create a joke, create a new user
-2. Read - Get all jokes,  joke of the day/random joke
+2. Read - Get all jokes from all users,  joke of the day/random joke
 3. Update - user's can edit their own jokes
 4. Delete - delete a joke
 
