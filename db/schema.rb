@@ -10,17 +10,17 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_06_15_215628) do
+ActiveRecord::Schema.define(version: 2020_06_16_162659) do
 
   create_table "jokes", force: :cascade do |t|
     t.string "joke"
-    t.integer "created_by_user_id"
+    t.integer "user_id"
     t.integer "topic_id"
   end
 
   create_table "ratings", force: :cascade do |t|
     t.integer "joke_id"
-    t.integer "rated_by_user_id"
+    t.integer "user_id"
     t.integer "score"
   end
 

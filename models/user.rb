@@ -12,12 +12,12 @@ class User < ActiveRecord::Base
             topic = Topic.find_or_create_by(topic: topic)
         #binding.pry
 
-            new_joke = Joke.new(joke: new_joke_text, topic: topic, created_by_user_id: self.id)
+            new_joke = Joke.new(joke: new_joke_text, topic: topic, user: self)
         # send joke back, ask if they want to make changes or save?
         puts new_joke.joke
         puts "Would you like to save? (Y/N)"
         input = ""
-       # binding.pry
+        binding.pry
         until input == "Y" || input == "N" do 
             input = gets.chomp
             if input == "Y"
@@ -60,6 +60,6 @@ class User < ActiveRecord::Base
     def search_for_joke
         puts "Please enter the whole joke you're looking for: "
         joke = gets.chomp
-        Joke.find_by(joke: joke, created_by_user_id: self.id) # this ensures the search queries are specific to this user instance
+        Joke.find_by(joke: joke, user: self) # this ensures the search queries are specific to this user instance
     end
 end
