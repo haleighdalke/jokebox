@@ -2,9 +2,23 @@ class CLI
   
   # welcome user, get user information, store user information, go to option screen
   def welcome_title
-    puts "Welcome to JokeBox! The super-fun CLI app experience where you can write, rate, and discover quick laughs. \n\n~we see you smiling already~\n\n"
+    print_welcome_slogan
     login
     menu_loop
+  end
+
+  def print_welcome_slogan
+    puts "-----------------------------------"
+    puts "
+    ░░░░░██╗░█████╗░██╗░░██╗███████╗██████╗░░█████╗░██╗░░██╗
+    ░░░░░██║██╔══██╗██║░██╔╝██╔════╝██╔══██╗██╔══██╗╚██╗██╔╝
+    ░░░░░██║██║░░██║█████═╝░█████╗░░██████╦╝██║░░██║░╚███╔╝░
+    ██╗░░██║██║░░██║██╔═██╗░██╔══╝░░██╔══██╗██║░░██║░██╔██╗░
+    ╚█████╔╝╚█████╔╝██║░╚██╗███████╗██████╦╝╚█████╔╝██╔╝╚██╗
+    ░╚════╝░░╚════╝░╚═╝░░╚═╝╚══════╝╚═════╝░░╚════╝░╚═╝░░╚═╝\n\n\n"
+    puts "Welcome to JokeBox! The super-fun CLI app experience where you can write, rate, and discover quick laughs. \n\n~ we see you smiling already ~\n\n"
+    puts "-----------------------------------"
+
   end
 
   # login function - ask for user input, then sign up or login
@@ -41,13 +55,16 @@ class CLI
 
   # prints main menu
   def print_main_menu
-    puts "Please choose an option:"
-    puts "1. Create a joke"
-    puts "2. Edit a joke"
-    puts "3. Get all jokes"
-    puts "4. Get 'Joke of the Day'"
-    puts "5. Delete Joke"
-    puts "6. Quit"
+    puts "-----------------------------------"
+    puts " | Please choose an option:      |"
+    puts " |                               |"
+    puts " | 1. Create a joke              |"
+    puts " | 2. Edit a joke                |"
+    puts " | 3. Get all jokes              |"
+    puts " | 4. Get 'Joke of the Day'      |"
+    puts " | 5. Delete Joke                |"
+    puts " | 6. Quit                       |"
+    puts "-----------------------------------"
     input = gets.chomp
   end
 
