@@ -37,31 +37,50 @@ class User < ActiveRecord::Base
         # return to main title
     end
 
+    # finds joke and prompts for edits if found
     def edit_joke
-        joke = search_for_joke
+        joke = find_my_joke
         if joke
             puts "Please enter your joke with changes:"
             new_joke = gets.chomp
             joke.update(joke: new_joke)
-            puts "Your joke has been successfully updated"
+            puts "Thanks! We've updated your joke!"
         else
-            puts "Sorry, we can't find your joke! Try retyping or choosing a joke that belongs to you."
+            puts "Sorry, we can't find your joke!"
         end
     end
 
+    # finds joke and deletes if found
     def delete_joke
-        joke = search_for_joke
+        joke = find_my_joke
         if joke
             joke.delete
+            puts "Thanks! Your joke has been deleted."
         else
-            puts "Sorry, we can't find your joke! Try retyping or choosing a joke that belongs to you."
+            puts "Sorry, we can't find your joke!"
         end
     end
 
+    # returns that joke instance or nil
     def search_for_joke
         puts "Please enter the whole joke you're looking for: "
         joke = gets.chomp
-        Joke.find_by(joke: joke, user: self) # this ensures the search queries are specific to this user instance
+        Joke.find_by(joke: joke, user: self)
+    end
+
+    # prints out all jokes associated with this instance
+    def print_my_jokes
+        jokes = Joke.where(user: self)
+        puts "Your jokes are:"
+        jokes.each do |joke|
+            puts joke.joke
+        end
+    end
+
+    # prints my jokes, asks & searches, returns joke or nil (if not found)
+    def find_my_joke
+        print_my_jokes
+        search_for_joke
     end
 
     def rate_a_random_joke

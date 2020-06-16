@@ -8,3 +8,5 @@ ActiveRecord::Base.establish_connection(
   database: "db/jokes.db"
 )
 
+
+ActiveRecord::Base.logger = nil
