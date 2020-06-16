@@ -18,7 +18,7 @@ class User < ActiveRecord::Base
         puts new_joke.joke
         puts "Would you like to save? (Y/N)"
         input = ""
-        binding.pry
+        # binding.pry
         until input == "Y" || input == "N" do 
             input = gets.chomp
             if input == "Y"
