@@ -50,29 +50,23 @@ class CLI
     when 1  # create a joke
       @current_user.create_joke
     when 2  # edit a joke (use helper method)
-      joke = search_for_joke
-      if joke
-        @current_user.edit_joke(joke)
-      else
-        puts "Sorry, joke not found. Please try again."
-      end
-    
+      @current_user.edit_joke
     when 3  # get all jokes *** format better
       Joke.print_all_jokes
     when 4  # get 'joke of the day'
       Joke.joke_of_the_day
     when 5  # delete joke
-
+      @current_user.delete_joke
     else
       puts "Invalid command. Please try again"
 
     end
   end
 
-  def search_for_joke
-    puts "Please enter the whole joke you're looking for: "
-    joke = gets.chomp
-    Joke.find_by(joke: joke)
-  end
+  # def search_for_joke
+  #   puts "Please enter the whole joke you're looking for: "
+  #   joke = gets.chomp
+  #   Joke.find_by(joke: joke)
+  # end
 
 end

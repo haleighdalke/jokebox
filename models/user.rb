@@ -10,13 +10,16 @@ class User < ActiveRecord::Base
         topic = gets.chomp  
             # find topic from all topics
             topic = Topic.find_or_create_by(topic: topic)
-        new_joke = Joke.new(joke: new_joke_text, topic: topic, created_by_user_id: self.id)
+        #binding.pry
+
+            new_joke = Joke.new(joke: new_joke_text, topic: topic, created_by_user_id: self.id)
         # send joke back, ask if they want to make changes or save?
-        binding.pry
         puts new_joke.joke
         puts "Would you like to save? (Y/N)"
-        input = gets.chomp
-        until input == "Y" || "N" do 
+        input = ""
+       # binding.pry
+        until input == "Y" || input == "N" do 
+            input = gets.chomp
             if input == "Y"
                 new_joke.save
                 puts "Thanks! Your joke has been saved."
@@ -24,7 +27,7 @@ class User < ActiveRecord::Base
                 puts "Your joke has not been saved."
                 #return to main title
             else
-                "Invalid command. Please try again."
+                puts "Invalid command. Please try again."
             end
         end
         # if make changes, repeat joke asking process
@@ -33,20 +36,30 @@ class User < ActiveRecord::Base
         # return to main title
     end
 
-    def edit_joke(joke)
-        puts "Please enter your joke with changes:"
-        new_joke = gets.chomp
-        joke.update(joke: new_joke)
-        puts "Your joke has been successfully updated"
+    def edit_joke
+        joke = search_for_joke
+        if joke
+            puts "Please enter your joke with changes:"
+            new_joke = gets.chomp
+            joke.update(joke: new_joke)
+            puts "Your joke has been successfully updated"
+        else
+            puts "Sorry, we can't find your joke! Try retyping or choosing a joke that belongs to you."
+        end
     end
 
-    def delete_joke(joke)
-        # find joke
-        # if there
-            # prompt to delete joke
-            # if yes, delete
-            # else return to main menu
-        # else "cannot find joke"
-            # return to main menu
+    def delete_joke
+        joke = search_for_joke
+        if joke
+            joke.delete
+        else
+            puts "Sorry, we can't find your joke! Try retyping or choosing a joke that belongs to you."
+        end
+    end
+
+    def search_for_joke
+        puts "Please enter the whole joke you're looking for: "
+        joke = gets.chomp
+        Joke.find_by(joke: joke, created_by_user_id: self.id) # this ensures the search queries are specific to this user instance
     end
 end
