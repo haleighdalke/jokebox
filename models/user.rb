@@ -1,6 +1,7 @@
 class User < ActiveRecord::Base
     has_many :jokes
     has_many :ratings
+    # has_many :topics, through: :jokes
 
     def create_joke
         # prompt user for a joke
@@ -54,6 +55,7 @@ class User < ActiveRecord::Base
         joke = find_my_joke
         if joke
             joke.delete
+            puts "Thanks! Your joke has been deleted."
         else
             puts "Sorry, we can't find your joke!"
         end
