@@ -82,4 +82,18 @@ class User < ActiveRecord::Base
         print_my_jokes
         search_for_joke
     end
+
+    def rate_a_random_joke
+        joke = Joke.all.sample
+        puts "#{joke.joke}"
+        puts "Please rate this joke (Score 1-5):"
+        input = gets.chomp
+        if (1..5).include?(input.to_i)
+            score = input.to_i
+            Rating.create(user: self, joke: joke, score: score)
+            puts "Thank you for your rating!\n\n"
+        else
+            puts "Invalid command. Please try again."
+        end
+    end
 end
