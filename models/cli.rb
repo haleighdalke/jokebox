@@ -55,6 +55,7 @@ class CLI
 
   # prints main menu
   def print_main_menu
+    puts "But first lets get through this crud..."
     puts "-----------------------------------"
     puts " | Please choose an option:      |"
     puts " |                               |"
