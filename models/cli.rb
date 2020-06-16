@@ -40,12 +40,16 @@ class CLI
   # menu loop - continue offering menu and executing until user decides to quit
   def menu_loop
     input = 0
+<<<<<<< HEAD
     until input.to_i == 6 do        # *** double check that input doesn't throw an error if it can't convernt to Integer ***
+=======
+    until input.to_i == 7 do
+>>>>>>> 0aed73b7c72ebd467e0c87454004c762782ab7f8
       input = print_main_menu
       input = input.to_i
-      if (1..5).include?(input)
+      if (1..6).include?(input)
         execute_main_menu(input) 
-      elsif input == 6
+      elsif input == 7
         puts "Goodbye!"
       else
         puts "Invalid command. Please try again."
@@ -55,6 +59,7 @@ class CLI
 
   # prints main menu
   def print_main_menu
+<<<<<<< HEAD
     puts "But first lets get through this crud..."
     puts "-----------------------------------"
     puts " | Please choose an option:      |"
@@ -64,8 +69,19 @@ class CLI
     puts " | 3. Get all jokes              |"
     puts " | 4. Get 'Joke of the Day'      |"
     puts " | 5. Delete Joke                |"
-    puts " | 6. Quit                       |"
+    puts " | 6. Rate a Random Joke         |"
+    puts " | 7. Quit                       |"
     puts "-----------------------------------"
+=======
+    puts "Please choose an option:"
+    puts "1. Create a joke"
+    puts "2. Edit a joke"
+    puts "3. Get all jokes"
+    puts "4. Get 'Joke of the Day'"
+    puts "5. Delete Joke"
+    puts "6. Rate a Random Joke"
+    puts "7. Quit"
+>>>>>>> 0aed73b7c72ebd467e0c87454004c762782ab7f8
     input = gets.chomp
   end
 
@@ -82,6 +98,8 @@ class CLI
       Joke.joke_of_the_day
     when 5                                        # delete joke
       @current_user.delete_joke
+    when 6 # rate a joke
+      @current_user.rate_a_random_joke
     else
       puts "Invalid command. Please try again"
 
