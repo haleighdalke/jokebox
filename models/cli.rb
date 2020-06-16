@@ -23,12 +23,12 @@ class CLI
     #---------welcome loop-------------
     # *** double check that input doesn't throw an error if it can't convernt to Integer ***
     input = 0
-    until input.to_i == 6 do
+    until input.to_i == 7 do
       input = print_main_menu
       input = input.to_i
-      if (1..5).include?(input)
+      if (1..6).include?(input)
         execute_main_menu(input) 
-      elsif input == 6
+      elsif input == 7
         puts "Goodbye!"
       else
         puts "Invalid command. Please try again."
@@ -43,7 +43,8 @@ class CLI
     puts "3. Get all jokes"
     puts "4. Get 'Joke of the Day'"
     puts "5. Delete Joke"
-    puts "6. Quit"
+    puts "6. Rate a Random Joke"
+    puts "7. Quit"
     input = gets.chomp
   end
 
@@ -59,6 +60,8 @@ class CLI
       Joke.joke_of_the_day
     when 5  # delete joke
       @current_user.delete_joke
+    when 6 # rate a joke
+      @current_user.rate_a_random_joke
     else
       puts "Invalid command. Please try again"
 

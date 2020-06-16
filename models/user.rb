@@ -63,4 +63,18 @@ class User < ActiveRecord::Base
         joke = gets.chomp
         Joke.find_by(joke: joke, user: self) # this ensures the search queries are specific to this user instance
     end
+
+    def rate_a_random_joke
+        joke = Joke.all.sample
+        puts "#{joke.joke}"
+        puts "Please rate this joke (Score 1-5):"
+        input = gets.chomp
+        if (1..5).include?(input.to_i)
+            score = input.to_i
+            Rating.create(user: self, joke: joke, score: score)
+            puts "Thank you for your rating!\n\n"
+        else
+            puts "Invalid command. Please try again."
+        end
+    end
 end
