@@ -3,11 +3,13 @@ class User < ActiveRecord::Base
     has_many :ratings
     # has_many :topics, through: :jokes
 
+    # prompts user for joke & topic and confirms to save
     def create_joke
         # prompt user for a joke
         puts "Please enter your joke:"
         new_joke_text = gets.chomp
-        puts "What is your joke topic?" #** print available joke topics
+        puts "Choose your joke topic or create one!" #** print available joke topics
+        Topic.print_all_topics
         topic = gets.chomp  
             # find topic from all topics
             topic = Topic.find_or_create_by(topic: topic)
@@ -16,9 +18,8 @@ class User < ActiveRecord::Base
             new_joke = Joke.new(joke: new_joke_text, topic: topic, user: self)
         # send joke back, ask if they want to make changes or save?
         puts new_joke.joke
-        puts "Would you like to save? (Y/N)"
+        puts "Would you like to save this joke? (Y/N)"
         input = ""
-        # binding.pry
         until input == "Y" || input == "N" do 
             input = gets.chomp
             if input == "Y"
@@ -26,7 +27,6 @@ class User < ActiveRecord::Base
                 puts "Thanks! Your joke has been saved."
             elsif input == "N"
                 puts "Your joke has not been saved."
-                #return to main title
             else
                 puts "Invalid command. Please try again."
             end
