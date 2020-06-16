@@ -1,6 +1,7 @@
 class User < ActiveRecord::Base
     has_many :jokes
     has_many :ratings
+    # has_many :topics, through: :jokes
 
     def create_joke
         # prompt user for a joke

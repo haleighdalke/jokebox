@@ -7,15 +7,18 @@ class CLI
     # go to option screen
     #---------initial welcome----------
     puts "Welcome to JokeBox! The super-fun CLI app experience where you can write, rate, and discover quick laughs. \n\n~we see you smiling already~"
-    puts "To start, we need your name: "
-    name = gets.chomp
-    puts "...and now your age (don't lie):"
-    age = gets.chomp
-    puts "Lastly let's get your current location:"
-    location = gets.chomp
-    @current_user = User.new(name: name, age: age, location: location) # *** double check int doesnt throw error ***
-    @current_user.save
-    puts "Yay! Let's get you started #{name} from #{location} who's definitely not #{age}!"
+    puts "Have you used this app before? (Y/N)"
+    input = ""
+    until input == "Y" || input == "N" do 
+    input = gets.chomp
+    if input == "Y"
+      user_log_in
+    elsif input == "N"
+      user_sign_up
+    else
+      puts "Invalid command. Please try again."
+    end 
+  end 
 
     #---------welcome loop-------------
     # *** double check that input doesn't throw an error if it can't convernt to Integer ***
@@ -46,7 +49,6 @@ class CLI
 
   def execute_main_menu(input)
     case input
-
     when 1  # create a joke
       @current_user.create_joke
     when 2  # edit a joke (use helper method)
@@ -69,4 +71,34 @@ class CLI
   #   Joke.find_by(joke: joke)
   # end
 
+  def user_sign_up
+    puts "To start, we need your name: "
+    name = gets.chomp
+    puts "...and now your age (don't lie):"
+    age = gets.chomp
+    puts "Lastly let's get your current location:"
+    location = gets.chomp
+    @current_user = User.create(name: name, age: age, location: location) # *** double check int doesnt throw error ***
+    puts "Yay! Let's get you started #{name} from #{location} who's definitely not #{age}!"
+  end
+
+  def user_log_in
+    puts "Great! What is your name?"
+    name = gets.chomp
+    @current_user = User.all.find_by(name: name)
+    if @current_user
+      puts "Welcome back, #{@current_user.name}! Let's get you started."
+    else 
+      puts "Unfortunately, we could not find you in our system. Let's sign you up."
+      user_sign_up
+      # puts "To start, we need your name:"
+      # name = gets.chomp
+      # puts "...and now your age (don't lie):"
+      # age = gets.chomp6
+      # puts "Lastly let's get your current location:"
+      # location = gets.chomp
+      # @current_user = User.create(name: name, age: age, location: location) # *** double check int doesnt throw error ***
+      # puts "Yay! Let's get you started #{name} from #{location} who's definitely not #{age}!"
+    end
+  end
 end
