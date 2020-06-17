@@ -21,15 +21,14 @@ class Joke < ActiveRecord::Base
 
     # returns a random joke
     def self.get_random_joke
-        joke = all.sample
-        puts "Your joke of the moment is:"
-        Joke.print_a_joke_with_pause(joke)
+        Joke.print_a_joke_with_pause(all.sample)
     end
     
     # prints all jokes with user who created them
     def self.print_all_jokes
-        puts "\nALL JOKES:\n\n"
-        all.each do |joke|
+        input = CLI.prompt("How many jokes do you want to see?")
+        puts "\nALL #{input} JOKES:\n\n"
+        all.sample(input.to_i).each do |joke|
             Joke.print_a_joke(joke)
             puts "\n"
         end
@@ -42,8 +41,8 @@ class Joke < ActiveRecord::Base
         user = User.all.find_by(name: name)
         if user 
             user_jokes = self.where(user: user)
-            puts "\nHere are #{user.name}'s jokes:"
-            user_jokes.select do |joke|
+            puts "\nHere are some of #{user.name}'s jokes:\n\n"
+            user_jokes.sample(10).select do |joke|
                 Joke.print_a_joke(joke)
             end
             puts "\n"
@@ -59,8 +58,8 @@ class Joke < ActiveRecord::Base
         topic_name = Topic.all.find_by(topic: topic)
         if topic_name 
             topic_jokes = self.where(topic: topic_name)
-            puts "\nHere are the '#{topic_name.topic}' jokes:"
-            topic_jokes.select do |joke|
+            puts "\nHere are some '#{topic_name.topic}' jokes:"
+            topic_jokes.sample(10).select do |joke|
                 Joke.print_a_joke(joke)
             end
             puts "\n"

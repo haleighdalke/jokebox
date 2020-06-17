@@ -22,7 +22,9 @@ class User < ActiveRecord::Base
         # send joke back, ask if they want to make changes or save?
         input = ""
         until input == "Y" || input == "N" do 
-            input = CLI.prompt("\nYour joke is: #{new_joke.setup}\n-- #{new_joke.punchline}\nJoke topic is: #{new_joke.topic.topic}\nWould you like to save this joke? (Y/N)")
+            Joke.print_a_joke(new_joke)
+            puts "Topic: #{new_joke.topic.topic}\n\n"
+            input = CLI.prompt("Would you like to save this joke? (Y/N)")
             if input == "Y"
                 new_joke.save
                 puts "\nThanks! Your joke has been saved.\n\n"
