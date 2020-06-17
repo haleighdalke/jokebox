@@ -40,12 +40,14 @@ class CLI
   # menu loop - continue offering menu and executing until user decides to quit
   def menu_loop
     input = 0
-    until input.to_i == 7 do
+    until input.to_i == 6 do
       input = print_main_menu
       input = input.to_i
-      if (1..6).include?(input)
+      if input == 2
+        discover_jokes_menu_loop
+      elsif (1..5).include?(input)
         execute_main_menu(input) 
-      elsif input == 7
+      elsif input == 6
         puts "Goodbye!"
       else
         puts "Invalid command. Please try again."
@@ -60,12 +62,11 @@ class CLI
     puts " | Please choose an option:      |"
     puts " |                               |"
     puts " | 1. Create a joke              |"
-    puts " | 2. Edit a joke                |"
-    puts " | 3. Get all jokes              |"
-    puts " | 4. Get 'Joke of the Day'      |"
-    puts " | 5. Delete Joke                |"
-    puts " | 6. Rate a Random Joke         |"
-    puts " | 7. Quit                       |"
+    puts " | 2. Discover jokes             |"
+    puts " | 3. Edit your jokes            |"
+    puts " | 4. Delete a joke              |"
+    puts " | 5. Rate a Random Joke         |"
+    puts " | 6. Quit                       |"
     puts "-----------------------------------"
     input = gets.chomp
   end
@@ -75,19 +76,63 @@ class CLI
     case input
     when 1                                        # create a joke
       @current_user.create_joke
-    when 2                                        # edit a joke (use helper method)
+    # when 2                                        # discover jokes
+    #   discover_jokes_menu_loop
+    when 3                                        # edit your jokes
       @current_user.edit_joke
-    when 3                                        # get all jokes *** format better
-      Joke.print_all_jokes
-    when 4                                        # get 'joke of the day'
-      Joke.joke_of_the_day
-    when 5                                        # delete joke
+    when 4                                        # delete a joke
       @current_user.delete_joke
-    when 6 # rate a joke
+    when 5                                        # rate a random joke
       @current_user.rate_a_random_joke
     else
-      puts "Invalid command. Please try again"
+      puts "Invalid command. Please try again.\n\n"
+    end
+  end
 
+  def discover_jokes_menu
+    puts "Did you find what you're looking for?"
+    puts "-----------------------------------"
+    puts " | Please choose an option:      |"
+    puts " |                               |"
+    puts " | 1. Find jokes by a user       |"
+    puts " | 2. Find jokes by a topic      |"
+    puts " | 3. Get a random joke          |"
+    puts " | 4. Get top 5 rated jokes      |"
+    puts " | 5. Get all jokes              |"
+    puts " | 6. Return to previous menu    |"
+    puts "-----------------------------------"
+    input = gets.chomp
+  end
+
+  def discover_jokes_menu_loop
+    input = 0
+    until input.to_i == 6 do
+      input = discover_jokes_menu
+      input = input.to_i
+      if (1..5).include?(input)
+        execute_discover_jokes_menu(input) 
+      elsif input == 6
+        break
+      else
+        puts "Invalid command. Please try again.\n\n"
+      end
+    end  
+  end
+
+  def execute_discover_jokes_menu(input)
+    case input
+    when 1                                        # find jokes by a user
+      Joke.find_jokes_by_user
+    when 2                                        # find jokes by a topic
+      Joke.find_jokes_by_topic
+    when 3                                        # get a random joke
+      Joke.get_random_joke
+    when 4                                        # get top 5 rated jokes
+      Joke.top_five_rated_jokes
+    when 5                                        # get all jokes
+      Joke.print_all_jokes
+    else
+      puts "Invalid command. Please try again"
     end
   end
 
