@@ -141,9 +141,13 @@ class User < ActiveRecord::Base
     # prints out all jokes associated with this instance
     def print_my_jokes
         jokes = Joke.where(user: self)
-        puts "\nYour jokes are:"
-        jokes.each do |joke|
-            Joke.print_a_joke(joke)
+        if !jokes.empty?
+            puts "\nYour jokes are:"
+            jokes.each do |joke|
+                Joke.print_a_joke(joke)
+            end
+        else
+            puts "You have no jokes! Try creating a joke first."
         end
         puts "\n"
     end
