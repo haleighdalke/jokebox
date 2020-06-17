@@ -5,6 +5,7 @@ class Joke < ActiveRecord::Base
 
     # ----- CLASS METHODS -----
 
+    # print a joke
     def self.print_a_joke(joke)
         puts "\n"
         puts "#{joke.setup}"
@@ -12,6 +13,7 @@ class Joke < ActiveRecord::Base
         puts "-- Submitted by #{joke.user.name}\n"
     end
 
+    # print a joke with a 3 second pause before punchline
     def self.print_a_joke_with_pause(joke)
         puts "#{joke.setup}"
         puts "..."
@@ -20,7 +22,7 @@ class Joke < ActiveRecord::Base
         puts "   -- Submitted by #{joke.user.name}\n"
     end
 
-    # returns a random joke
+    # prints a random joke
     def self.get_random_joke
         joke = all.sample
         Joke.print_a_joke_with_pause(joke)
