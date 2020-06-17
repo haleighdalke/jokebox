@@ -38,8 +38,9 @@ class User < ActiveRecord::Base
     def edit_joke
         joke = find_my_joke
         if joke
-            new_joke = CLI.prompt("Please enter your joke with changes:")
-            joke.update(joke: new_joke)
+            new_setup = CLI.prompt("Please enter your new setup, with changes:")
+            new_punchline = CLI.prompt("Please enter your new punchline, with changes:")
+            joke.update(setup: new_setup, punchline: new_punchline)
             puts "\nThanks! We've updated your joke!\n\n"
         else
             puts "\nSorry, we can't find your joke!\n\n"
@@ -69,8 +70,8 @@ class User < ActiveRecord::Base
     # rate random joke
     def rate_a_random_joke
         joke = Joke.all.sample
-        puts "\n'#{joke.joke}'"
-        input = CLI.prompt("Please rate this joke (Score 1-5):").to_i
+        Joke.print_a_joke_with_pause(joke)
+        input = CLI.prompt("Rate this joke (Score 1-5):").to_i
 
         if (1..5).include?(input)
             score = input
@@ -132,8 +133,9 @@ class User < ActiveRecord::Base
 
     # returns that joke instance or nil
     def search_for_joke
-        joke = CLI.prompt("Please enter the whole joke you're looking for:")
-        Joke.find_by(joke: joke, user: self)
+        joke_setup = CLI.prompt("Please enter the setup for the joke you're looking for:")
+        joke_punchline = CLI.prompt("Please enter the punchline for the joke you're looking for:")
+        Joke.find_by(setup: joke_setup, punchline: joke_punchline, user: self)
     end
 
     # prints out all jokes associated with this instance
@@ -141,7 +143,7 @@ class User < ActiveRecord::Base
         jokes = Joke.where(user: self)
         puts "\nYour jokes are:"
         jokes.each do |joke|
-            puts "- #{joke.joke}"
+            Joke.print_a_joke(joke)
         end
         puts "\n"
     end
