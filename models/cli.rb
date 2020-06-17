@@ -19,7 +19,7 @@ class CLI
       elsif input == "N"
         @current_user = User.sign_up
       else
-        puts "\nInvalid command. Please try again.\n\n"
+        puts "Invalid command. Please try again.\n\n"
       end 
     end 
   end
@@ -30,7 +30,9 @@ class CLI
       puts question
     end
     print "--> "
-    gets.chomp
+    input = gets.chomp
+    puts "\n"
+    input
   end
 
 
@@ -50,7 +52,7 @@ class CLI
       elsif input == 6
         puts "Goodbye!"
       else
-        puts "\nInvalid command. Please try again.\n\n"
+        puts "Invalid command. Please try again.\n\n"
       end
 
     end  
@@ -68,7 +70,7 @@ class CLI
       elsif input == 6
         break
       else
-        puts "\nInvalid command. Please try again.\n\n"
+        puts "Invalid command. Please try again.\n\n"
       end
 
     end  
@@ -125,6 +127,7 @@ class CLI
   end
 
   def print_main_menu
+    puts "\n"
     puts "====================================="
     puts " ||        ~ Main Menu ~          ||"
     puts " ||                               ||"
@@ -140,6 +143,7 @@ class CLI
 
   def print_discover_jokes_menu
     # puts "Did you find what you're looking for?"
+    puts "\n"
     puts "-------------------------------------"
     puts "  |   ~ Discover Jokes Menu ~     |"
     puts "  |                               |"
