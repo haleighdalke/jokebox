@@ -18,19 +18,17 @@ class CLI
     ░╚════╝░░╚════╝░╚═╝░░╚═╝╚══════╝╚═════╝░░╚════╝░╚═╝░░╚═╝\n\n\n"
     puts "Welcome to JokeBox! The super-fun CLI app experience where you can write, rate, and discover quick laughs. \n\n~ we see you smiling already ~\n\n"
     puts "-----------------------------------"
-
   end
 
   # login function - ask for user input, then sign up or login
   def login
-    puts "Have you used this app before? (Y/N)"
     input = ""
     until input == "Y" || input == "N" do 
-      input = gets.chomp
+      input = CLI.prompt("Have you used this app before? (Y/N)")
       if input == "Y"
-        user_log_in
+        @current_user = User.log_in
       elsif input == "N"
-        user_sign_up
+        @current_user = User.sign_up
       else
         puts "Invalid command. Please try again."
       end 
@@ -40,9 +38,9 @@ class CLI
   # menu loop - continue offering menu and executing until user decides to quit
   def menu_loop
     input = 0
-    until input.to_i == 7 do
-      input = print_main_menu
-      input = input.to_i
+    until input == 7 do
+      print_main_menu
+      input = CLI.prompt.to_i
       if (1..6).include?(input)
         execute_main_menu(input) 
       elsif input == 7
@@ -55,7 +53,6 @@ class CLI
 
   # prints main menu
   def print_main_menu
-    puts "But first lets get through this crud..."
     puts "-----------------------------------"
     puts " | Please choose an option:      |"
     puts " |                               |"
@@ -67,7 +64,15 @@ class CLI
     puts " | 6. Rate a Random Joke         |"
     puts " | 7. Quit                       |"
     puts "-----------------------------------"
-    input = gets.chomp
+  end
+
+  # prompt for inupt based on a question (helps with consistent formatting)
+  def self.prompt(question=nil)
+    if question
+      puts question
+    end
+    print "--> "
+    gets.chomp
   end
 
   # executes the main menu using class functions
@@ -91,28 +96,4 @@ class CLI
     end
   end
 
-  # prompt for new user sign up
-  def user_sign_up
-    puts "To start, we need your name: "
-    name = gets.chomp
-    puts "...and now your age (don't lie):"
-    age = gets.chomp
-    puts "Lastly let's get your current location:"
-    location = gets.chomp
-    @current_user = User.create(name: name, age: age, location: location) # *** double check int doesnt throw error ***
-    puts "Yay! Let's get you started #{name} from #{location} who's definitely not #{age}!"
-  end
-
-  # pompt for user name, search for first instance of that name, if name doesn't exit then sign up the user
-  def user_log_in
-    puts "Great! What is your name?"
-    name = gets.chomp
-    @current_user = User.all.find_by(name: name)
-    if @current_user
-      puts "Welcome back, #{@current_user.name}! Let's get you started."
-    else 
-      puts "Unfortunately, we could not find you in our system. Let's sign you up."
-      user_sign_up
-    end
-  end
 end
