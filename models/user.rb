@@ -21,7 +21,7 @@ class User < ActiveRecord::Base
 
         # send joke back, ask if they want to make changes or save?
         input = ""
-        until input == "Y" || input == "N" do 
+        until input == "Y" || input == "N" do             
             input = CLI.prompt("\nYour joke is: #{new_joke.joke}\nJoke topic is: #{new_joke.topic.topic}\nWould you like to save this joke? (Y/N)")
             if input == "Y"
                 new_joke.save

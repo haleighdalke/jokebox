@@ -5,18 +5,33 @@ class Joke < ActiveRecord::Base
 
     # ----- CLASS METHODS -----
 
+    def self.print_a_joke(joke)
+        puts "'#{joke.setup}'"
+        puts "'#{joke.punchline}'"
+        puts "-- Submitted by #{joke.user.name}"
+    end
+
+    def self.print_a_joke_with_pause(joke)
+        puts "'#{joke.setup}'"
+        puts "..."
+        sleep(3)
+        puts "'#{joke.punchline}'"
+        puts "-- Submitted by #{joke.user.name}"
+    end
+
     # returns a random joke
     def self.get_random_joke
         joke = all.sample
-        puts "Your joke of the moment is: \n'#{joke.joke}'\nSubmitted by #{joke.user.name}\n\n"
+        puts "Your joke of the moment is:"
+        Joke.print_a_joke_with_pause(joke)
     end
     
     # prints all jokes with user who created them
     def self.print_all_jokes
         puts "\nALL JOKES:\n\n"
         all.each do |joke|
-            puts "'#{joke.joke}'"
-            puts "-- Submitted by #{joke.user.name} \n\n"
+            Joke.print_a_joke(joke)
+            puts "\n"
         end
     end
 
@@ -29,7 +44,7 @@ class Joke < ActiveRecord::Base
             user_jokes = self.where(user: user)
             puts "\nHere are #{user.name}'s jokes:"
             user_jokes.select do |joke|
-                puts "- #{joke.joke}"
+                Joke.print_a_joke(joke)
             end
             puts "\n"
         else
@@ -46,7 +61,7 @@ class Joke < ActiveRecord::Base
             topic_jokes = self.where(topic: topic_name)
             puts "\nHere are the '#{topic_name.topic}' jokes:"
             topic_jokes.select do |joke|
-                puts "- #{joke.joke}"
+                Joke.print_a_joke(joke)
             end
             puts "\n"
         else
@@ -65,7 +80,8 @@ class Joke < ActiveRecord::Base
     def self.top_five_rated_jokes
         top_5 = only_rated_jokes.sort_by {|joke| joke.average_rating }.reverse!
         top_5[0..4].select do |joke|
-            puts "#{top_5.index(joke) + 1}. #{joke.joke}"
+            print "#{top_5.index(joke) + 1}. "
+            Joke.print_a_joke(joke)
             puts "Average Rating: #{joke.average_rating} \n\n"
         end
     end
