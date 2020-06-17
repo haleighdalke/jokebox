@@ -96,4 +96,32 @@ class User < ActiveRecord::Base
             puts "Invalid command. Please try again."
         end
     end
+
+
+
+  # prompt for new user sign up
+  def self.sign_up
+    name = CLI.prompt("To start, we need your name:")
+    age = CLI.prompt("...and now your age (don't lie):").to_i
+    location = CLI.prompt("Lastly let's get your current location:")
+
+    @current_user = User.create(name: name, age: age, location: location)
+
+    puts "Yay! Let's get you started #{name} from #{location} who's definitely not #{age}!\n"
+    @current_user
+  end
+
+  # pompt for user name, search for first instance of that name, if name doesn't exit then sign up the user
+  def self.log_in 
+    name = CLI.prompt("Great! What is your name?")
+    @current_user = User.all.find_by(name: name)
+    if @current_user
+      puts "Welcome back, #{@current_user.name}! Let's get you started.\n"
+    else 
+      puts "Unfortunately, we could not find you in our system. Let's sign you up."
+      self.sign_up
+    end
+    @current_user
+  end
+
 end
