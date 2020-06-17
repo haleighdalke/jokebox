@@ -53,7 +53,17 @@ class Joke < ActiveRecord::Base
         end 
     end
 
+    def self.only_rated_jokes
+        Joke.all.select do |joke|
+            joke.ratings.any?
+        end
+    end
+
     def self.top_five_rated_jokes
-        binding.pry
+        top_5 = only_rated_jokes.sort_by {|joke| joke.average_rating }.reverse!
+        top_5[0..4].select do |joke|
+            puts "- #{joke.joke}"
+            puts "Average Rating: #{joke.average_rating} \n\n"
+        end
     end
 end
