@@ -5,6 +5,7 @@ class Topic < ActiveRecord::Base
         topic_list.select do |topic|
             puts "#{topic_list.index(topic) + 1}. #{topic.topic}"
         end
+        puts "\n"
     end
 
     def self.top_5_topics
