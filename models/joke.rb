@@ -21,7 +21,7 @@ class Joke < ActiveRecord::Base
 
     # finds and prints jokes by user
     def self.find_jokes_by_user
-        name = CLI.prompt("Who's jokes are you looking for?")
+        name = CLI.prompt("Whose jokes are you looking for?")
         user = User.all.find_by(name: name)
         if user 
             user_jokes = self.where(user: user)
@@ -37,6 +37,7 @@ class Joke < ActiveRecord::Base
 
     # finds and prints jokes by topic
     def self.find_jokes_by_topic
+        Topic.top_5_topics
         topic = CLI.prompt("What topic are you looking for?")
         topic_name = Topic.all.find_by(topic: topic)
         if topic_name 
@@ -60,7 +61,7 @@ class Joke < ActiveRecord::Base
     def self.top_five_rated_jokes
         top_5 = only_rated_jokes.sort_by {|joke| joke.average_rating }.reverse!
         top_5[0..4].select do |joke|
-            puts "- #{joke.joke}"
+            puts "#{top_5.index(joke) + 1}. #{joke.joke}"
             puts "Average Rating: #{joke.average_rating} \n\n"
         end
     end
@@ -73,6 +74,6 @@ class Joke < ActiveRecord::Base
         total_ratings = ratings.sum do |rating|
             rating.score
         end
-        total_ratings.to_f / ratings.count
+        (total_ratings.to_f / ratings.count).round(2)
     end
 end

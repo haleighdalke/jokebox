@@ -12,7 +12,7 @@ class User < ActiveRecord::Base
         new_joke_text = CLI.prompt("Please enter your joke:")
 
         puts "\nChoose your joke topic or create one!"
-        Topic.print_all_topics
+        Topic.top_5_topics
         topic = CLI.prompt
         
         # find topic from all topics & create a new joke
@@ -22,7 +22,7 @@ class User < ActiveRecord::Base
         # send joke back, ask if they want to make changes or save?
         input = ""
         until input == "Y" || input == "N" do 
-            input = CLI.prompt("\nYour joke is: #{new_joke.joke}\nWould you like to save this joke? (Y/N)")
+            input = CLI.prompt("\nYour joke is: #{new_joke.joke}\nJoke topic is: #{new_joke.topic.topic}\nWould you like to save this joke? (Y/N)")
             if input == "Y"
                 new_joke.save
                 puts "\nThanks! Your joke has been saved.\n\n"
