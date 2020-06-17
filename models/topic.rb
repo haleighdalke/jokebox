@@ -5,5 +5,6 @@ class Topic < ActiveRecord::Base
         all.select do |topic|
             puts "- #{topic.topic}"
         end
+        puts "\n"
     end
 end

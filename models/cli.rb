@@ -30,7 +30,7 @@ class CLI
       elsif input == "N"
         @current_user = User.sign_up
       else
-        puts "Invalid command. Please try again."
+        puts "Invalid command. Please try again.\n\n"
       end 
     end 
   end
@@ -48,7 +48,7 @@ class CLI
       elsif input == 6
         puts "Goodbye!"
       else
-        puts "Invalid command. Please try again."
+        puts "Invalid command. Please try again.\n\n"
       end
     end  
   end
