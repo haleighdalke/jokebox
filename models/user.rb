@@ -9,20 +9,20 @@ class User < ActiveRecord::Base
     # prompts user for joke & topic and confirms to save
     def create_joke
         # prompt user for a joke & topic
-        new_joke_text = CLI.prompt("Please enter your joke:")
-
+        joke_setup = CLI.prompt("Please enter your joke setup:")
+        joke_punchline = CLI.prompt("Please enter the punchline:")
         puts "\nType in your joke topic or create one!\n\n"
         Topic.print_top_five_topics
         topic = CLI.prompt
-        binding.pry
+
         # find topic from all topics & create a new joke
         topic = Topic.find_or_create_by(topic: topic)
-        new_joke = Joke.new(joke: new_joke_text, topic: topic, user: self)
+        new_joke = Joke.new(setup: joke_setup, punchline: joke_punchline, topic: topic, user: self)
 
         # send joke back, ask if they want to make changes or save?
         input = ""
-        until input == "Y" || input == "N" do             
-            input = CLI.prompt("\nYour joke is: #{new_joke.joke}\nJoke topic is: #{new_joke.topic.topic}\nWould you like to save this joke? (Y/N)")
+        until input == "Y" || input == "N" do 
+            input = CLI.prompt("\nYour joke is: #{new_joke.setup}\n-- #{new_joke.punchline}\nJoke topic is: #{new_joke.topic.topic}\nWould you like to save this joke? (Y/N)")
             if input == "Y"
                 new_joke.save
                 puts "\nThanks! Your joke has been saved.\n\n"
