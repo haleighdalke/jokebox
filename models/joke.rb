@@ -7,7 +7,8 @@ class Joke < ActiveRecord::Base
 
     # returns a random joke
     def self.get_random_joke
-        puts "Your joke of the moment is: \n'#{all.sample.joke}'\n\n"
+        joke = all.sample
+        puts "Your joke of the moment is: \n'#{joke.joke}'\nSubmitted by #{joke.user.name}\n\n"
     end
     
     # prints all jokes with user who created them
@@ -21,6 +22,7 @@ class Joke < ActiveRecord::Base
 
     # finds and prints jokes by user
     def self.find_jokes_by_user
+        User.print_top_five_users
         name = CLI.prompt("Whose jokes are you looking for?")
         user = User.all.find_by(name: name)
         if user 
@@ -37,7 +39,7 @@ class Joke < ActiveRecord::Base
 
     # finds and prints jokes by topic
     def self.find_jokes_by_topic
-        Topic.top_5_topics
+        Topic.print_top_five_topics
         topic = CLI.prompt("What topic are you looking for?")
         topic_name = Topic.all.find_by(topic: topic)
         if topic_name 
@@ -48,16 +50,18 @@ class Joke < ActiveRecord::Base
             end
             puts "\n"
         else
-            puts "\nSorry! We could not find this topic in our system.\n\n"
+            puts "\nSorry! We couldn't find this topic in our system.\n\n"
         end 
     end
 
+    # only stores jokes that have ratings
     def self.only_rated_jokes
         Joke.all.select do |joke|
             joke.ratings.any?
         end
     end
 
+    # returns top 5 rated jokes by average rating
     def self.top_five_rated_jokes
         top_5 = only_rated_jokes.sort_by {|joke| joke.average_rating }.reverse!
         top_5[0..4].select do |joke|
