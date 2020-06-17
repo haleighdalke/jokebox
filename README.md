@@ -54,6 +54,10 @@ Topic
 - User can delete a rating
 - User can delete topic name
 
+- list topics
+- cleanup output
+- popular jokes by age
+- api
 
 ### End of Day Check In (June 15)
 
