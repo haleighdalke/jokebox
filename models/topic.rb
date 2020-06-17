@@ -10,7 +10,7 @@ class Topic < ActiveRecord::Base
 
     def self.top_5_topics
         top_5 = Topic.all.sort_by { |topic| topic.jokes.length }.reverse!
-        puts "The top 5 topics are:"
+        puts "The top 5 joke topics are:"
         print_topics(top_5[0..4])
     end
 end
