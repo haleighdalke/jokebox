@@ -22,7 +22,7 @@ class Joke < ActiveRecord::Base
 
     # finds and prints jokes by user
     def self.find_jokes_by_user
-        User.top_five_users
+        User.print_top_five_users
         name = CLI.prompt("Whose jokes are you looking for?")
         user = User.all.find_by(name: name)
         if user 
@@ -39,7 +39,7 @@ class Joke < ActiveRecord::Base
 
     # finds and prints jokes by topic
     def self.find_jokes_by_topic
-        Topic.top_5_topics
+        Topic.print_top_five_topics
         topic = CLI.prompt("What topic are you looking for?")
         topic_name = Topic.all.find_by(topic: topic)
         if topic_name 

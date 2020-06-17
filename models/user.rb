@@ -12,9 +12,9 @@ class User < ActiveRecord::Base
         new_joke_text = CLI.prompt("Please enter your joke:")
 
         puts "\nType in your joke topic or create one!\n\n"
-        Topic.top_5_topics
+        Topic.print_top_five_topics
         topic = CLI.prompt
-        
+        binding.pry
         # find topic from all topics & create a new joke
         topic = Topic.find_or_create_by(topic: topic)
         new_joke = Joke.new(joke: new_joke_text, topic: topic, user: self)
@@ -117,11 +117,15 @@ class User < ActiveRecord::Base
         puts "\n"
     end
 
+    # order users by number of jokes submitted (descending)
+    def self.top_users
+        User.all.sort_by { |user| user.jokes.length }.reverse!
+    end
+
     # returns top 5 users by amount of jokes submitted
-    def self.top_five_users
-        top_5 = User.all.sort_by { |user| user.jokes.length }.reverse!
+    def self.print_top_five_users
         puts "The top 5 Users are:"
-        print_users(top_5[0..4])
+        print_users(top_users[0..4])
     end
 
     # ----- HELPER INSTANCE METHODS -----
