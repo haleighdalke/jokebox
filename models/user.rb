@@ -9,7 +9,7 @@ class User < ActiveRecord::Base
         puts "Please enter your joke:"
         new_joke_text = gets.chomp
         puts "Choose your joke topic or create one!" #** print available joke topics
-        Topic.print_all_topics
+        Topic.top_5_topics
         topic = gets.chomp  
             # find topic from all topics
             topic = Topic.find_or_create_by(topic: topic)

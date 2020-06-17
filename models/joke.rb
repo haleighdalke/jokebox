@@ -40,6 +40,7 @@ class Joke < ActiveRecord::Base
 
     def self.find_jokes_by_topic
         puts "What topic are you looking for?"
+        Topic.top_5_topics
         topic = gets.chomp
         topic_name = Topic.all.find_by(topic: topic)
         if topic_name 
@@ -62,7 +63,7 @@ class Joke < ActiveRecord::Base
     def self.top_five_rated_jokes
         top_5 = only_rated_jokes.sort_by {|joke| joke.average_rating }.reverse!
         top_5[0..4].select do |joke|
-            puts "- #{joke.joke}"
+            puts "#{top_5.index(joke) + 1} #{joke.joke}"
             puts "Average Rating: #{joke.average_rating} \n\n"
         end
     end
