@@ -6,32 +6,31 @@ class Joke < ActiveRecord::Base
     # ----- CLASS METHODS -----
 
     def self.print_a_joke(joke)
-        puts "'#{joke.setup}'"
-        puts "'#{joke.punchline}'"
-        puts "-- Submitted by #{joke.user.name}"
+        puts "\n"
+        puts "#{joke.setup}"
+        puts "+ #{joke.punchline}"
+        puts "-- Submitted by #{joke.user.name}\n"
     end
 
     def self.print_a_joke_with_pause(joke)
-        puts "'#{joke.setup}'"
+        puts "#{joke.setup}"
         puts "..."
         sleep(3)
-        puts "'#{joke.punchline}'"
-        puts "-- Submitted by #{joke.user.name}"
+        puts "#{joke.punchline}"
+        puts "   -- Submitted by #{joke.user.name}\n"
     end
 
     # returns a random joke
     def self.get_random_joke
         joke = all.sample
-        puts "Your joke of the moment is:"
         Joke.print_a_joke_with_pause(joke)
     end
     
     # prints all jokes with user who created them
     def self.print_all_jokes
-        puts "\nALL JOKES:\n\n"
+        puts "ALL JOKES:\n\n"
         all.each do |joke|
             Joke.print_a_joke(joke)
-            puts "\n"
         end
     end
 
@@ -42,13 +41,12 @@ class Joke < ActiveRecord::Base
         user = User.all.find_by(name: name)
         if user 
             user_jokes = self.where(user: user)
-            puts "\nHere are #{user.name}'s jokes:"
+            puts "Here are #{user.name}'s jokes:"
             user_jokes.select do |joke|
                 Joke.print_a_joke(joke)
             end
-            puts "\n"
         else
-            puts "\nSorry! We could not find this user in our system.\n\n"
+            puts "Sorry! We could not find this user in our system.\n\n"
         end
     end
 
@@ -59,13 +57,12 @@ class Joke < ActiveRecord::Base
         topic_name = Topic.all.find_by(topic: topic)
         if topic_name 
             topic_jokes = self.where(topic: topic_name)
-            puts "\nHere are the '#{topic_name.topic}' jokes:"
+            puts "Here are the '#{topic_name.topic}' jokes:"
             topic_jokes.select do |joke|
                 Joke.print_a_joke(joke)
             end
-            puts "\n"
         else
-            puts "\nSorry! We couldn't find this topic in our system.\n\n"
+            puts "Sorry! We couldn't find this topic in our system.\n\n"
         end 
     end
 
@@ -80,9 +77,9 @@ class Joke < ActiveRecord::Base
     def self.top_five_rated_jokes
         top_5 = only_rated_jokes.sort_by {|joke| joke.average_rating }.reverse!
         top_5[0..4].select do |joke|
-            print "#{top_5.index(joke) + 1}. "
+            print "#{top_5.index(joke) + 1}. Average Rating: #{joke.average_rating}"
             Joke.print_a_joke(joke)
-            puts "Average Rating: #{joke.average_rating} \n\n"
+            puts "\n"
         end
     end
 

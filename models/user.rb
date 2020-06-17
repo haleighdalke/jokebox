@@ -11,7 +11,7 @@ class User < ActiveRecord::Base
         # prompt user for a joke & topic
         joke_setup = CLI.prompt("Please enter your joke setup:")
         joke_punchline = CLI.prompt("Please enter the punchline:")
-        puts "\nType in your joke topic or create one!\n\n"
+        puts "Type in your joke topic or create one!\n\n"
         Topic.print_top_five_topics
         topic = CLI.prompt
 
@@ -25,11 +25,11 @@ class User < ActiveRecord::Base
             input = CLI.prompt("\nYour joke is: #{new_joke.setup}\n-- #{new_joke.punchline}\nJoke topic is: #{new_joke.topic.topic}\nWould you like to save this joke? (Y/N)")
             if input == "Y"
                 new_joke.save
-                puts "\nThanks! Your joke has been saved.\n\n"
+                puts "Thanks! Your joke has been saved.\n\n"
             elsif input == "N"
-                puts "\nYour joke has not been saved.\n\n"
+                puts "Your joke has not been saved.\n\n"
             else
-                puts "\nInvalid command. Please try again.\n\n"
+                puts "Invalid command. Please try again.\n\n"
             end
         end
     end
@@ -41,9 +41,9 @@ class User < ActiveRecord::Base
             new_setup = CLI.prompt("Please enter your new setup, with changes:")
             new_punchline = CLI.prompt("Please enter your new punchline, with changes:")
             joke.update(setup: new_setup, punchline: new_punchline)
-            puts "\nThanks! We've updated your joke!\n\n"
+            puts "Thanks! We've updated your joke!\n\n"
         else
-            puts "\nSorry, we can't find your joke!\n\n"
+            puts "Sorry, we can't find your joke!\n\n"
         end
     end
 
@@ -52,9 +52,9 @@ class User < ActiveRecord::Base
         joke = find_my_joke
         if joke
             joke.delete
-            puts "\nThanks! Your joke has been deleted.\n\n"
+            puts "Thanks! Your joke has been deleted.\n\n"
         else
-            puts "\nSorry, we can't find your joke!\n\n"
+            puts "Sorry, we can't find your joke!\n\n"
         end
     end
 
@@ -71,14 +71,14 @@ class User < ActiveRecord::Base
     def rate_a_random_joke
         joke = Joke.all.sample
         Joke.print_a_joke_with_pause(joke)
-        input = CLI.prompt("Rate this joke (Score 1-5):").to_i
+        input = CLI.prompt("\nRate this joke (Score 1-5):").to_i
 
         if (1..5).include?(input)
             score = input
             Rating.create(user: self, joke: joke, score: score)
-            puts "\nThank you for your rating!\n\n"
+            puts "Thank you for your rating!\n\n"
         else
-            puts "\nInvalid command. Please try again.\n\n"
+            puts "Invalid command. Please try again.\n\n"
         end
     end
     
@@ -93,7 +93,7 @@ class User < ActiveRecord::Base
 
         @current_user = User.create(name: name, age: age, location: location)
 
-        puts "\nYay! Let's get you started #{name} from #{location} who's definitely not #{age}!\n\n"
+        puts "Yay! Let's get you started #{name} from #{location} who's definitely not #{age}!\n\n"
         @current_user
     end
 
@@ -102,9 +102,9 @@ class User < ActiveRecord::Base
         name = CLI.prompt("Great! What is your name?")
         @current_user = User.all.find_by(name: name)
         if @current_user
-        puts "\nWelcome back, #{@current_user.name}! Let's get you started.\n\n"
+        puts "Welcome back, #{@current_user.name}! Let's get you started.\n\n"
         else 
-        puts "\nUnfortunately, we could not find you in our system. Let's sign you up.\n\n"
+        puts "Unfortunately, we could not find you in our system. Let's sign you up.\n\n"
         self.sign_up
         end
         @current_user
@@ -141,15 +141,10 @@ class User < ActiveRecord::Base
     # prints out all jokes associated with this instance
     def print_my_jokes
         jokes = Joke.where(user: self)
-        if !jokes.empty?
-            puts "\nYour jokes are:"
+            puts "Your jokes are:"
             jokes.each do |joke|
                 Joke.print_a_joke(joke)
             end
-        else
-            puts "You have no jokes! Try creating a joke first."
-        end
-        puts "\n"
     end
 
 end
