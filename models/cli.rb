@@ -33,15 +33,16 @@ class CLI
     gets.chomp
   end
 
-  
+
   # ----- MENU LOOPS -----
 
   # menu loop - continue offering menu and executing until user decides to quit
   def menu_loop
     input = 0
-    until input.to_i == 6 do
+    until input == 6 do
       print_main_menu
       input = CLI.prompt.to_i
+
       if input == 2
         discover_jokes_menu_loop
       elsif (1..5).include?(input)
@@ -51,22 +52,25 @@ class CLI
       else
         puts "\nInvalid command. Please try again.\n\n"
       end
+
     end  
   end
 
   # discover jokes loop
   def discover_jokes_menu_loop
     input = 0
-    until input.to_i == 6 do
+    until input == 6 do
       print_discover_jokes_menu
       input = CLI.prompt.to_i
+
       if (1..5).include?(input)
         execute_discover_jokes_menu(input) 
       elsif input == 6
         break
       else
-        puts "Invalid command. Please try again.\n\n"
+        puts "\nInvalid command. Please try again.\n\n"
       end
+
     end  
   end
 
@@ -85,8 +89,6 @@ class CLI
       @current_user.delete_joke
     when 5                                        # rate a random joke
       @current_user.rate_a_random_joke
-    else
-      puts "\nInvalid command. Please try again.\n\n"
     end
   end
 
@@ -103,8 +105,6 @@ class CLI
       Joke.top_five_rated_jokes
     when 5                                        # get all jokes
       Joke.print_all_jokes
-    else
-      puts "\nInvalid command. Please try again\n\n"
     end
   end
 
@@ -125,34 +125,32 @@ class CLI
   end
 
   def print_main_menu
-    puts "-----------------------------------"
-    puts " | Please choose an option:      |"
-    puts " |                               |"
-    puts " | 1. Create a joke              |"
-    puts " | 2. Discover jokes             |"
-    puts " | 3. Edit your jokes            |"
-    puts " | 4. Delete a joke              |"
-    puts " | 5. Rate a Random Joke         |"
-    puts " | 6. Quit                       |"
-    puts "-----------------------------------"
+    puts "====================================="
+    puts " ||        ~ Main Menu ~          ||"
+    puts " ||                               ||"
+    puts " || Please choose an option:      ||"
+    puts " ||  1. Create a joke             ||"
+    puts " ||  2. Discover jokes            ||"
+    puts " ||  3. Edit your jokes           ||"
+    puts " ||  4. Delete a joke             ||"
+    puts " ||  5. Rate a Random Joke        ||"
+    puts " ||  6. Quit                      ||"
+    puts "====================================="
   end
 
   def print_discover_jokes_menu
-    puts "Did you find what you're looking for?"
-    puts "-----------------------------------"
-    puts " | Please choose an option:      |"
-    puts " |                               |"
-    puts " | 1. Find jokes by a user       |"
-    puts " | 2. Find jokes by a topic      |"
-    puts " | 3. Get a random joke          |"
-    puts " | 4. Get top 5 rated jokes      |"
-    puts " | 5. Get all jokes              |"
-    puts " | 6. Return to previous menu    |"
-    puts "-----------------------------------"
+    # puts "Did you find what you're looking for?"
+    puts "-------------------------------------"
+    puts "  |   ~ Discover Jokes Menu ~     |"
+    puts "  |                               |"
+    puts "  | Please choose an option:      |"
+    puts "  |  1. Find jokes by a user      |"
+    puts "  |  2. Find jokes by a topic     |"
+    puts "  |  3. Get a random joke         |"
+    puts "  |  4. Get top 5 rated jokes     |"
+    puts "  |  5. Get all jokes             |"
+    puts "  |  6. Return to 'Main Menu'     |"
+    puts "-------------------------------------"
   end
-
-  
-
-
 
 end

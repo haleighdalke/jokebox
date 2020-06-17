@@ -3,6 +3,9 @@ class User < ActiveRecord::Base
     has_many :ratings
     # has_many :topics, through: :jokes
 
+
+    # ----- CRUD -----
+
     # prompts user for joke & topic and confirms to save
     def create_joke
         # prompt user for a joke & topic
@@ -54,6 +57,61 @@ class User < ActiveRecord::Base
         end
     end
 
+    # prints my jokes, asks & searches, returns joke or nil (if not found)
+    def find_my_joke
+        print_my_jokes
+        search_for_joke
+    end
+
+
+    # ----- EXTRA METHODS -----
+
+    # rate random joke
+    def rate_a_random_joke
+        joke = Joke.all.sample
+        puts "\n'#{joke.joke}'"
+        input = CLI.prompt("Please rate this joke (Score 1-5):").to_i
+
+        if (1..5).include?(input)
+            score = input
+            Rating.create(user: self, joke: joke, score: score)
+            puts "\nThank you for your rating!\n\n"
+        else
+            puts "\nInvalid command. Please try again.\n\n"
+        end
+    end
+    
+
+    # ----- USER CLASS METHODS -----
+
+    # prompt for new user sign up
+    def self.sign_up
+        name = CLI.prompt("To start, we need your name:")
+        age = CLI.prompt("...and now your age (don't lie):").to_i
+        location = CLI.prompt("Lastly let's get your current location:")
+
+        @current_user = User.create(name: name, age: age, location: location)
+
+        puts "\nYay! Let's get you started #{name} from #{location} who's definitely not #{age}!\n\n"
+        @current_user
+    end
+
+    # pompt for user name, search for first instance of that name, if name doesn't exit then sign up the user
+    def self.log_in 
+        name = CLI.prompt("Great! What is your name?")
+        @current_user = User.all.find_by(name: name)
+        if @current_user
+        puts "\nWelcome back, #{@current_user.name}! Let's get you started.\n\n"
+        else 
+        puts "\nUnfortunately, we could not find you in our system. Let's sign you up.\n\n"
+        self.sign_up
+        end
+        @current_user
+    end
+
+
+    # ----- HELPER INSTANCE METHODS -----
+
     # returns that joke instance or nil
     def search_for_joke
         joke = CLI.prompt("Please enter the whole joke you're looking for:")
@@ -69,52 +127,5 @@ class User < ActiveRecord::Base
         end
         puts "\n"
     end
-
-    # prints my jokes, asks & searches, returns joke or nil (if not found)
-    def find_my_joke
-        print_my_jokes
-        search_for_joke
-    end
-
-    def rate_a_random_joke
-        joke = Joke.all.sample
-        puts "#{joke.joke}"
-        puts "Please rate this joke (Score 1-5):"
-        input = gets.chomp
-        if (1..5).include?(input.to_i)
-            score = input.to_i
-            Rating.create(user: self, joke: joke, score: score)
-            puts "Thank you for your rating!\n\n"
-        else
-            puts "Invalid command. Please try again.\n\n"
-        end
-    end
-
-
-
-  # prompt for new user sign up
-  def self.sign_up
-    name = CLI.prompt("To start, we need your name:")
-    age = CLI.prompt("...and now your age (don't lie):").to_i
-    location = CLI.prompt("Lastly let's get your current location:")
-
-    @current_user = User.create(name: name, age: age, location: location)
-
-    puts "\nYay! Let's get you started #{name} from #{location} who's definitely not #{age}!\n\n"
-    @current_user
-  end
-
-  # pompt for user name, search for first instance of that name, if name doesn't exit then sign up the user
-  def self.log_in 
-    name = CLI.prompt("Great! What is your name?")
-    @current_user = User.all.find_by(name: name)
-    if @current_user
-      puts "\nWelcome back, #{@current_user.name}! Let's get you started.\n\n"
-    else 
-      puts "\nUnfortunately, we could not find you in our system. Let's sign you up.\n\n"
-      self.sign_up
-    end
-    @current_user
-  end
 
 end
