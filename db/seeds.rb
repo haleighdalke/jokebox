@@ -5,7 +5,9 @@ Topic.destroy_all
 
 file = File.read("./db/index.json")
 data = JSON.parse(file)
+names = ['Noah', 'Emma', 'Liam', 'Sophia', 'Jacob', 'Olivia', 'Mason', 'Isabella', 'William', 'Ava', 'Ethan', 'Mia', 'Michael', 'Abigail', 'Alexander']
 
+locations = ['San Francisco', 'Seattle', 'New York', 'Dallas', 'Detroit', 'Miami', 'Las Vegas', 'Boston']
 #binding.pry
 
 # create topics
@@ -13,13 +15,22 @@ data.map do |joke|
     Topic.find_or_create_by(topic: joke["type"])
 end
 
+# create users
+
+names.map do |name|
+    User.create(name: name, age: rand(13..90), location: locations.sample)
+end
+
 # create jokes
 data.map do |joke|
     #binding.pry
-    Joke.create(topic_id: Topic.find_or_create_by(topic: joke["type"]).id, setup: joke["setup"], punchline: joke["punchline"], user_id: User.find_or_create_by(name: "anonymous").id)
+    Joke.create(topic_id: Topic.find_or_create_by(topic: joke["type"]).id, setup: joke["setup"], punchline: joke["punchline"], user_id: User.all.sample.id)
 end
 
-
+# add random ratings
+50.times do
+    Rating.create(user: User.all.sample, joke: Joke.all.sample, score: rand(1..5))
+end
 
 
 # # ----Users-----
