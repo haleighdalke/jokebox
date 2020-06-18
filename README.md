@@ -55,5 +55,5 @@ We started with the idea of a fake news app (apropos with our current political 
 
 If you want to contribute to our project, please see our CODE_OF_CONDUCT.md file for direction.
 
-## Liscence
+## License
 Refer to LICENSE file.
