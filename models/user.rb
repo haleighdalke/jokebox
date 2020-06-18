@@ -42,7 +42,7 @@ class User < ActiveRecord::Base
         if joke
             new_setup = CLI.prompt("\nPlease enter your new setup, with changes:")
             new_punchline = CLI.prompt("Please enter your new punchline, with changes:")
-            new_topic = CLI.prompt("Your topic was #{joke.topic.topic}. Please enter a new topic:")
+            new_topic = CLI.prompt("Your topic was #{joke.topic.topic}. Please enter an updated topic:")
             joke.update(setup: new_setup, punchline: new_punchline, topic: Topic.find_or_create_by(topic: new_topic))
             puts "Thanks! We've updated your joke!\n\n"
         else
@@ -131,7 +131,7 @@ class User < ActiveRecord::Base
 
     # returns that joke instance or nil
     def search_for_joke
-        joke_setup = CLI.prompt("Please enter the setup for the joke you're looking for:")
+        joke_setup = CLI.prompt("\nPlease enter the setup for the joke you're looking for:")
         Joke.find_by(setup: joke_setup, user: self)
     end
 
