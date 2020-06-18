@@ -50,7 +50,8 @@ class CLI
       elsif (1..5).include?(input)
         execute_main_menu(input) 
       elsif input == 6
-        puts "Goodbye!"
+        # puts "Goodbye!"
+        print_goodbye_message
       else
         puts "Invalid command. Please try again.\n\n"
       end
@@ -114,14 +115,15 @@ class CLI
   # ----- PRINTS -----
 
   def print_welcome_slogan
+    jukebox_art
     puts "-----------------------------------"
-    puts "
-    ░░░░░██╗░█████╗░██╗░░██╗███████╗██████╗░░█████╗░██╗░░██╗
-    ░░░░░██║██╔══██╗██║░██╔╝██╔════╝██╔══██╗██╔══██╗╚██╗██╔╝
-    ░░░░░██║██║░░██║█████═╝░█████╗░░██████╦╝██║░░██║░╚███╔╝░
-    ██╗░░██║██║░░██║██╔═██╗░██╔══╝░░██╔══██╗██║░░██║░██╔██╗░
-    ╚█████╔╝╚█████╔╝██║░╚██╗███████╗██████╦╝╚█████╔╝██╔╝╚██╗
-    ░╚════╝░░╚════╝░╚═╝░░╚═╝╚══════╝╚═════╝░░╚════╝░╚═╝░░╚═╝\n\n\n"
+    # puts "
+    # ░░░░░██╗░█████╗░██╗░░██╗███████╗██████╗░░█████╗░██╗░░██╗
+    # ░░░░░██║██╔══██╗██║░██╔╝██╔════╝██╔══██╗██╔══██╗╚██╗██╔╝
+    # ░░░░░██║██║░░██║█████═╝░█████╗░░██████╦╝██║░░██║░╚███╔╝░
+    # ██╗░░██║██║░░██║██╔═██╗░██╔══╝░░██╔══██╗██║░░██║░██╔██╗░
+    # ╚█████╔╝╚█████╔╝██║░╚██╗███████╗██████╦╝╚█████╔╝██╔╝╚██╗
+    # ░╚════╝░░╚════╝░╚═╝░░╚═╝╚══════╝╚═════╝░░╚════╝░╚═╝░░╚═╝\n\n\n"
     puts "Welcome to JokeBox! The super-fun CLI app experience where you can write, rate, and discover quick laughs. \n\n~ we see you smiling already ~\n\n"
     puts "-----------------------------------"
   end
@@ -157,4 +159,19 @@ class CLI
     puts "-------------------------------------"
   end
 
+  def print_goodbye_message
+    system("clear") || system("cls")
+    thank_you_art
+  end
+
+  ## ASCII ART
+  def thank_you_art
+    banner = File.read("./db/thanks.txt")
+    puts banner
+  end
+
+  def jukebox_art
+    banner = File.read("./db/jukebox.txt")
+    puts banner
+  end
 end
