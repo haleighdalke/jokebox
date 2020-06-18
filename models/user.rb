@@ -40,10 +40,10 @@ class User < ActiveRecord::Base
     def edit_joke
         joke = find_my_joke
         if joke
-            new_setup = CLI.prompt("Please enter your new setup, with changes:")
+            new_setup = CLI.prompt("\nPlease enter your new setup, with changes:")
             new_punchline = CLI.prompt("Please enter your new punchline, with changes:")
             new_topic = CLI.prompt("Your topic was #{joke.topic.topic}. Please enter a new topic:")
-            joke.update(setup: new_setup, punchline: new_punchline, topic: new_topic)
+            joke.update(setup: new_setup, punchline: new_punchline, topic: Topic.find_or_create_by(topic: new_topic))
             puts "Thanks! We've updated your joke!\n\n"
         else
             puts "Sorry, we can't find your joke!\n\n"
@@ -55,9 +55,9 @@ class User < ActiveRecord::Base
         joke = find_my_joke
         if joke
             joke.delete
-            puts "Thanks! Your joke has been deleted.\n\n"
+            puts "\nThanks! Your joke has been deleted.\n\n"
         else
-            puts "Sorry, we can't find your joke!\n\n"
+            puts "\nSorry, we can't find your joke!\n\n"
         end
     end
 
