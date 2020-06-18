@@ -24,7 +24,7 @@ class User < ActiveRecord::Base
         until input == "Y" || input == "N" do 
             Joke.print_a_joke(new_joke)
             puts "Topic: #{new_joke.topic.topic}\n\n"
-            input = CLI.prompt("Would you like to save this joke? (Y/N)")
+            input = CLI.prompt("Would you like to save this joke? (Y/N)").upcase
             if input == "Y"
                 new_joke.save
                 puts "Thanks! Your joke has been saved.\n\n"
@@ -74,14 +74,16 @@ class User < ActiveRecord::Base
     def rate_a_random_joke
         joke = Joke.all.sample
         Joke.print_a_joke_with_pause(joke)
-        input = CLI.prompt("\nRate this joke (Score 1-5):").to_i
-
-        if (1..5).include?(input)
-            score = input
-            Rating.create(user: self, joke: joke, score: score)
-            puts "Thank you for your rating!\n\n"
-        else
-            puts "Invalid command. Please try again.\n\n"
+        input = 0
+        until (1..5).include?(input)
+            input = CLI.prompt("\nRate this joke (Score 1-5):").to_i
+            if (1..5).include?(input)
+                score = input
+                Rating.create(user: self, joke: joke, score: score)
+                puts "Thank you for your rating!\n\n"
+            else
+                puts "Invalid command. Please try again.\n\n"
+            end
         end
     end
     

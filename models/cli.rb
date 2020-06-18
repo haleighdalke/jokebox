@@ -13,7 +13,7 @@ class CLI
   def login
     input = ""
     until input == "Y" || input == "N" do 
-      input = CLI.prompt("Have you used this app before? (Y/N)")
+      input = CLI.prompt("Have you used this app before? (Y/N)").upcase
       if input == "Y"
         @current_user = User.log_in
       elsif input == "N"
@@ -24,7 +24,7 @@ class CLI
     end 
   end
 
-  # prompt for inupt based on a question (helps with consistent formatting)
+  # prompt for input based on a question (helps with consistent formatting)
   def self.prompt(question=nil)
     if question
       puts question
