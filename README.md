@@ -10,7 +10,7 @@ A simple CLI CRUD app created with Ruby and ActiveRecord that allows a user to i
 * Contributions
 
 ## General Info
-This project was created by Haleigh Dalke and Scott Espinsoa for the purpose of learning Ruby and ActiveRecord. Mod1 Final Project at Flatiron School, presented on June 18, 2020.
+This project was created by Haleigh Dalke and Scott Espinosa for the purpose of learning Ruby and ActiveRecord. Mod1 Final Project at Flatiron School, presented on June 18, 2020.
 
 Repo link: https://github.com/haleighdalke/jokebox 
 
