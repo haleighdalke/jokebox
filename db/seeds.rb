@@ -28,7 +28,7 @@ data.map do |joke|
 end
 
 # add random ratings
-50.times do
+1000.times do
     Rating.create(user: User.all.sample, joke: Joke.all.sample, score: rand(1..5))
 end
 

@@ -72,8 +72,7 @@ class User < ActiveRecord::Base
 
     # rate random joke
     def rate_a_random_joke
-        joke = Joke.all.sample
-        Joke.print_a_joke_with_pause(joke)
+        joke = Joke.get_random_joke
         input = 0
         until (1..5).include?(input)
             input = CLI.prompt("\nRate this joke (Score 1-5):").to_i

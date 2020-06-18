@@ -41,15 +41,15 @@ class CLI
   # menu loop - continue offering menu and executing until user decides to quit
   def menu_loop
     input = 0
-    until input == 6 do
+    until input == 5 do
       print_main_menu
       input = CLI.prompt.to_i
 
       if input == 2
         discover_jokes_menu_loop
-      elsif (1..5).include?(input)
+      elsif (1..4).include?(input)
         execute_main_menu(input) 
-      elsif input == 6
+      elsif input == 5
         # puts "Goodbye!"
         print_goodbye_message
       else
@@ -102,8 +102,8 @@ class CLI
       Joke.find_jokes_by_user
     when 2                                        # find jokes by a topic
       Joke.find_jokes_by_topic
-    when 3                                        # get a random joke
-      Joke.get_random_joke
+    when 3                                        # rate a random joke
+      @current_user.rate_a_random_joke
     when 4                                        # get top 5 rated jokes
       Joke.top_five_rated_jokes
     when 5                                        # get all jokes
@@ -138,8 +138,7 @@ class CLI
     puts " ||  2. Discover jokes            ||"
     puts " ||  3. Edit your jokes           ||"
     puts " ||  4. Delete a joke             ||"
-    puts " ||  5. Rate a Random Joke        ||"
-    puts " ||  6. Quit                      ||"
+    puts " ||  5. Quit                      ||"
     puts "====================================="
   end
 
@@ -152,7 +151,7 @@ class CLI
     puts "  | Please choose an option:      |"
     puts "  |  1. Find jokes by a user      |"
     puts "  |  2. Find jokes by a topic     |"
-    puts "  |  3. Get a random joke         |"
+    puts "  |  3. Rate a random joke        |"
     puts "  |  4. Get top 5 rated jokes     |"
     puts "  |  5. Get all jokes             |"
     puts "  |  6. Return to 'Main Menu'     |"
